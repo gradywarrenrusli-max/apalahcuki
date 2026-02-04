@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal APBN</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            padding: 10px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 15px 0;
+            border-bottom: 2px solid #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        
+        .menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .card:hover {
+            border-color: #3498db;
+            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.2);
+        }
+        
+        .card h3 {
+            color: #2c3e50;
+            font-size: 16px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card h3 i {
+            margin-right: 8px;
+            color: #3498db;
+        }
+        
+        .card p {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+        
+        .counter {
+            display: inline-block;
+            background: #ecf0f1;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            color: #2c3e50;
+        }
+        
+        .question-section {
+            display: none;
+            margin-bottom: 20px;
+        }
+        
+        .question {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .question-number {
+            background: #3498db;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+        
+        .question h4 {
+            color: #2c3e50;
+            font-size: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .options {
+            margin-left: 10px;
+        }
+        
+        .option {
+            margin: 8px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background: #e8f4fc;
+            border-color: #3498db;
+        }
+        
+        .option.selected {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .option.wrong {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+        
+        .explanation {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-left: 3px solid #f39c12;
+            border-radius: 3px;
+            font-size: 13px;
+            color: #555;
+            display: none;
+        }
+        
+        .explanation.show {
+            display: block;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .button:hover {
+            background: #2980b9;
+        }
+        
+        .button-secondary {
+            background: #95a5a6;
+        }
+        
+        .button-secondary:hover {
+            background: #7f8c8d;
+        }
+        
+        .button-success {
+            background: #28a745;
+        }
+        
+        .button-success:hover {
+            background: #218838;
+        }
+        
+        .result-panel {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+            display: none;
+        }
+        
+        .score {
+            font-size: 36px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 15px 0;
+        }
+        
+        .score-text {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .stat-item {
+            padding: 10px;
+            border-radius: 4px;
+            background: #f8f9fa;
+        }
+        
+        .stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .timer {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 14px;
+            color: #2c3e50;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            color: #7f8c8d;
+            font-size: 12px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .menu {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .button {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .timer {
+                position: static;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="timer" id="timer">
+        <i class="fas fa-clock"></i> <span id="time">60:00</span>
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-book"></i> Latihan Soal APBN</h1>
+            <p>Anggaran Pendapatan dan Belanja Negara - UU No.17 Tahun 2003</p>
+        </div>
+        
+        <div class="menu" id="menu">
+            <div class="card" onclick="startQuiz('fungsi')">
+                <h3><i class="fas fa-cogs"></i> Fungsi APBN</h3>
+                <p>Soal tentang 6 fungsi APBN berdasarkan UU No.17 Tahun 2003</p>
+                <span class="counter">10 Soal</span>
+            </div>
+            
+            <div class="card" onclick="startQuiz('tujuan')">
+                <h3><i class="fas fa-bullseye"></i> Tujuan APBN</h3>
+                <p>Soal tentang tujuan penyusunan APBN</p>
+                <span class="counter">8 Soal</span>
+            </div>
+            
+            <div class="card" onclick="startQuiz('penerimaan')">
+                <h3><i class="fas fa-money-bill"></i> Penerimaan Negara</h3>
+                <p>Soal sumber penerimaan negara (pajak & non-pajak)</p>
+                <span class="counter">12 Soal</span>
+            </div>
+            
+            <div class="card" onclick="startQuiz('belanja')">
+                <h3><i class="fas fa-shopping-cart"></i> Belanja Negara</h3>
+                <p>Soal jenis-jenis belanja negara</p>
+                <span class="counter">10 Soal</span>
+            </div>
+            
+            <div class="card" onclick="startQuiz('mekanisme')">
+                <h3><i class="fas fa-project-diagram"></i> Mekanisme APBN</h3>
+                <p>Soal pengaruh dan mekanisme APBN</p>
+                <span class="counter">8 Soal</span>
+            </div>
+            
+            <div class="card" onclick="startQuiz('full')">
+                <h3><i class="fas fa-graduation-cap"></i> Ujian Lengkap</h3>
+                <p>48 soal semua materi APBN (60 menit)</p>
+                <span class="counter">48 Soal</span>
+            </div>
+        </div>
+        
+        <div id="quiz-section" class="question-section">
+            <h2 id="quiz-title" style="color:#2c3e50; margin-bottom:15px; font-size:18px;"></h2>
+            <div id="questions-container"></div>
+            
+            <div class="controls">
+                <button class="button" onclick="submitQuiz()">
+                    <i class="fas fa-paper-plane"></i> Kumpulkan Jawaban
+                </button>
+                <button class="button button-secondary" onclick="resetQuiz()">
+                    <i class="fas fa-redo"></i> Ulangi Soal
+                </button>
+                <button class="button button-secondary" onclick="showMenu()">
+                    <i class="fas fa-arrow-left"></i> Kembali ke Menu
+                </button>
+            </div>
+        </div>
+        
+        <div id="result-section" class="result-panel">
+            <h2 style="color:#2c3e50; margin-bottom:15px; font-size:18px;">
+                <i class="fas fa-chart-bar"></i> Hasil Tes APBN
+            </h2>
+            <div class="score" id="final-score">0</div>
+            <div class="score-text" id="score-text"></div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="correct-count" style="color:#28a745;">0</div>
+                    <div class="stat-label">Benar</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="wrong-count" style="color:#dc3545;">0</div>
+                    <div class="stat-label">Salah</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="total-questions" style="color:#3498db;">0</div>
+                    <div class="stat-label">Total Soal</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="percentage" style="color:#f39c12;">0%</div>
+                    <div class="stat-label">Persentase</div>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button class="button button-success" onclick="reviewAnswers()">
+                    <i class="fas fa-search"></i> Review Jawaban
+                </button>
+                <button class="button" onclick="showMenu()">
+                    <i class="fas fa-home"></i> Kembali ke Menu
+                </button>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Latihan Soal APBN - Untuk Pembelajaran</p>
+            <p>Berdasarkan UU No.17 Tahun 2003 tentang Keuangan Negara</p>
+        </div>
+    </div>
+
+    <script>
+        // Data soal APBN (sama seperti sebelumnya)
+        const quizData = {
+            fungsi: {
+                title: "FUNGSI APBN",
+                questions: [
+                    {
+                        question: "APBN menjadi dasar untuk melaksanakan pendapatan dan belanja pada tahun bersangkutan. Fungsi APBN ini disebut...",
+                        options: [
+                            "Fungsi Otorisasi",
+                            "Fungsi Perencanaan", 
+                            "Fungsi Pengawasan",
+                            "Fungsi Alokasi"
+                        ],
+                        correct: 0,
+                        explanation: "Fungsi otorisasi berarti APBN menjadi dasar hukum untuk melaksanakan pendapatan dan belanja negara."
+                    },
+                    {
+                        question: "APBN sebagai pedoman dalam merencanakan kegiatan pada tahun bersangkutan merupakan fungsi...",
+                        options: [
+                            "Fungsi Perencanaan",
+                            "Fungsi Distribusi",
+                            "Fungsi Stabilisasi",
+                            "Fungsi Alokasi"
+                        ],
+                        correct: 0,
+                        explanation: "Fungsi perencanaan berarti APBN menjadi pedoman dalam merencanakan kegiatan pemerintah."
+                    },
+                    {
+                        question: "Anggaran negara menjadi pedoman untuk menilai kegiatan penyelenggaraan pemerintah. Ini adalah fungsi...",
+                        options: [
+                            "Fungsi Pengawasan",
+                            "Fungsi Otorisasi",
+                            "Fungsi Distribusi", 
+                            "Fungsi Stabilisasi"
+                        ],
+                        correct: 0,
+                        explanation: "Fungsi pengawasan berarti APBN menjadi alat untuk menilai kesesuaian pelaksanaan dengan rencana."
+                    },
+                    {
+                        question: "Pendapatan negara dialokasikan untuk berbagai sektor pembangunan. Fungsi ini disebut...",
+                        options: [
+                            "Fungsi Alokasi",
+                            "Fungsi Distribusi",
+                            "Fungsi Perencanaan",
+                            "Fungsi Stabilisasi"
+                        ],
+                        correct: 0,
+                        explanation: "Fungsi alokasi berarti sumber daya dialokasikan untuk berbagai sektor pembangunan."
+                    },
+                    {
+                        question: "Sumber pendapatan dapat dialokasikan untuk sektor publik maupun didistribusikan kepada individu. Fungsi ini adalah...",
+                        options: [
+                            "Fungsi Distribusi",
+                            "Fungsi Alokasi",
+                            "Fungsi Pengawasan",
+                            "Fungsi Otorisasi"
+                        ],
+                        correct: 0,
+                        explanation: "Fungsi distribusi berkaitan dengan pembagian pendapatan kepada masyarakat."
+                    },
+                    {
+                        question: "APBN digunakan pemerintah untuk menstabilkan perekonomian negara. Ini adalah fungsi...",
+                        options: [
+                            "Fungsi Stabilisasi",
+                            "Fungsi Distribusi",
+                            "Fungsi Perencanaan",
+                            "Fungsi Alokasi"
+                        ],
+                        correct: 0,
+                        explanation: "Fungsi stabilisasi berarti APBN digunakan untuk menjaga stabilitas ekonomi."
+                    },
+                    {
+                        question: "Berdasarkan UU No.17 Tahun 2003, berapa jumlah fungsi APBN yang diatur?",
+                        options: [
+                            "6 fungsi",
+                            "5 fungsi",
+                            "4 fungsi",
+                            "3 fungsi"
+                        ],
+                        correct: 0,
+                        explanation: "UU No.17 Tahun 2003 mengatur 6 fungsi APBN: Otorisasi, Perencanaan, Pengawasan, Alokasi, Distribusi, dan Stabilisasi."
+                    },
+                    {
+                        question: "APBN menjadi pedoman dalam menentukan kebijakan moneter agar nilai mata uang terjaga. Fungsi APBN yang sesuai adalah...",
+                        options: [
+                            "Fungsi Stabilisasi",
+                            "Fungsi Otorisasi",
+                            "Fungsi Distribusi",
+                            "Fungsi Pengawasan"
+                        ],
+                        correct: 0,
+                        explanation: "Menjaga nilai mata uang merupakan bagian dari fungsi stabilisasi."
+                    },
+                    {
+                        question: "Fungsi APBN yang menjamin bahwa setiap kegiatan pemerintah memiliki dasar hukum adalah...",
+                        options: [
+                            "Fungsi Otorisasi",
+                            "Fungsi Perencanaan",
+                            "Fungsi Alokasi",
+                            "Fungsi Distribusi"
+                        ],
+                        correct: 0,
+                        explanation: "Fungsi otorisasi memberikan dasar hukum bagi kegiatan pemerintah."
+                    },
+                    {
+                        question: "Fungsi APBN yang berkaitan dengan pemerataan pendapatan adalah...",
+                        options: [
+                            "Fungsi Distribusi",
+                            "Fungsi Stabilisasi",
+                            "Fungsi Alokasi",
+                            "Fungsi Pengawasan"
+                        ],
+                        correct: 0,
+                        explanation: "Fungsi distribusi berkaitan dengan pemerataan pendapatan dalam masyarakat."
+                    }
+                ]
+            },
+            tujuan: {
+                title: "TUJUAN APBN",
+                questions: [
+                    {
+                        question: "Tujuan utama APBN adalah sebagai...",
+                        options: [
+                            "Pedoman bagi pemerintah dalam pengeluaran dan penerimaan",
+                            "Alat untuk menarik investor asing",
+                            "Cara meningkatkan pajak",
+                            "Metode mengurangi hutang negara"
+                        ],
+                        correct: 0,
+                        explanation: "APBN menjadi pedoman/panduan bagi pemerintah dalam melaksanakan kegiatan fiskal."
+                    },
+                    {
+                        question: "Salah satu tujuan APBN adalah meningkatkan produksi. Hal ini dilakukan melalui...",
+                        options: [
+                            "Alokasi anggaran untuk sektor produktif",
+                            "Penurunan pajak secara drastis",
+                            "Pembelian barang dari luar negeri",
+                            "Pengurangan belanja pegawai"
+                        ],
+                        correct: 0,
+                        explanation: "Dengan mengalokasikan anggaran ke sektor produktif, produksi dapat ditingkatkan."
+                    },
+                    {
+                        question: "APBN bertujuan meningkatkan kesempatan kerja melalui...",
+                        options: [
+                            "Proyek-proyek pemerintah yang menyerap tenaga kerja",
+                            "Pengurangan jumlah PNS",
+                            "Peningkatan otomatisasi",
+                            "Impor tenaga kerja asing"
+                        ],
+                        correct: 0,
+                        explanation: "Proyek pemerintah seperti pembangunan infrastruktur menciptakan lapangan kerja."
+                    },
+                    {
+                        question: "Tujuan APBN dalam mendorong pertumbuhan ekonomi dilakukan dengan...",
+                        options: [
+                            "Investasi dalam infrastruktur dan pendidikan",
+                            "Menaikkan semua jenis pajak",
+                            "Mengurangi belanja negara",
+                            "Mencetak uang baru"
+                        ],
+                        correct: 0,
+                        explanation: "Investasi di infrastruktur dan pendidikan meningkatkan produktivitas ekonomi."
+                    },
+                    {
+                        question: "APBN bertujuan untuk menjaga stabilitas harga melalui...",
+                        options: [
+                            "Pengendalian inflasi",
+                            "Penetapan harga maksimal",
+                            "Subsidi semua barang",
+                            "Import barang murah"
+                        ],
+                        correct: 0,
+                        explanation: "APBN dapat digunakan sebagai instrumen untuk mengendalikan inflasi."
+                    },
+                    {
+                        question: "Tujuan distribusi pendapatan dalam APBN dicapai melalui...",
+                        options: [
+                            "Program bantuan sosial",
+                            "Penghapusan pajak progresif",
+                            "Pemberian tunjangan kepada PNS saja",
+                            "Subsidi BBM tak terbatas"
+                        ],
+                        correct: 0,
+                        explanation: "Program bantuan sosial membantu mengurangi ketimpangan pendapatan."
+                    },
+                    {
+                        question: "APBN bertujuan mengurangi pengangguran dengan cara...",
+                        options: [
+                            "Menciptakan lapangan kerja baru",
+                            "Mengurangi upah minimum",
+                            "Memperbanyak pekerja kontrak",
+                            "Mengimpor teknologi canggih"
+                        ],
+                        correct: 0,
+                        explanation: "Proyek-proyek pemerintah menciptakan kesempatan kerja baru."
+                    },
+                    {
+                        question: "APBN menjadi pedoman untuk menentukan kebijakan moneter bertujuan...",
+                        options: [
+                            "Menjaga nilai mata uang",
+                            "Meningkatkan cadangan devisa",
+                            "Menarik investor asing",
+                            "Memperbanyak bank swasta"
+                        ],
+                        correct: 0,
+                        explanation: "Koordinasi kebijakan fiskal (APBN) dan moneter menjaga nilai mata uang."
+                    }
+                ]
+            },
+            penerimaan: {
+                title: "PENERIMAAN NEGARA",
+                questions: [
+                    {
+                        question: "Penerimaan negara terdiri dari...",
+                        options: [
+                            "Pendapatan Dalam Negeri dan Hibah",
+                            "Pajak dan Retribusi",
+                            "Penerimaan Minyak dan Non-Minyak",
+                            "Ekspor dan Impor"
+                        ],
+                        correct: 0,
+                        explanation: "Berdasarkan PPT: 1. Pendapatan Dalam Negeri, 2. Hibah"
+                    },
+                    {
+                        question: "Penerimaan pajak terdiri dari...",
+                        options: [
+                            "Pajak dalam negeri dan pajak perdagangan internasional",
+                            "Pajak langsung dan pajak tidak langsung",
+                            "Pajak pusat dan pajak daerah",
+                            "Pajak penghasilan dan pajak pertambahan nilai"
+                        ],
+                        correct: 0,
+                        explanation: "Pajak dalam negeri (PPh, PPN, PBB) dan pajak perdagangan internasional (Bea Impor & Ekspor)"
+                    },
+                    {
+                        question: "Contoh pajak dalam negeri adalah...",
+                        options: [
+                            "Pajak Penghasilan (PPh)",
+                            "Bea Impor",
+                            "Bea Ekspor",
+                            "Pajak Ekspor-Impor"
+                        ],
+                        correct: 0,
+                        explanation: "PPh, PPN, dan PBB termasuk pajak dalam negeri."
+                    },
+                    {
+                        question: "Penerimaan bukan pajak meliputi...",
+                        options: [
+                            "Hasil Sumber Daya Alam dan Laba BUMN",
+                            "Retribusi dan Cukai",
+                            "Denda dan Sita",
+                            "Hibah dan Bantuan"
+                        ],
+                        correct: 0,
+                        explanation: "Penerimaan bukan pajak: Hasil SDA dan Laba BUMN."
+                    },
+                    {
+                        question: "Bagian pemerintah atas laba BUMN termasuk...",
+                        options: [
+                            "Penerimaan bukan pajak",
+                            "Penerimaan pajak",
+                            "Hibah",
+                            "Bantuan sosial"
+                        ],
+                        correct: 0,
+                        explanation: "Laba BUMN merupakan penerimaan negara bukan pajak."
+                    },
+                    {
+                        question: "Hibah adalah...",
+                        options: [
+                            "Dana bantuan dari negara lain",
+                            "Pajak dari perusahaan asing",
+                            "Hasil ekspor tambang",
+                            "Denda pelanggaran impor"
+                        ],
+                        correct: 0,
+                        explanation: "Hibah: dana bantuan yang diberikan oleh negara lain."
+                    },
+                    {
+                        question: "Contoh penerimaan bukan pajak dari sumber daya alam adalah...",
+                        options: [
+                            "Royalti minyak dan gas",
+                            "Pajak pertambangan",
+                            "Cukai tembakau",
+                            "Bea cukai"
+                        ],
+                        correct: 0,
+                        explanation: "Royalti dari SDA termasuk penerimaan bukan pajak."
+                    },
+                    {
+                        question: "Pajak perdagangan internasional meliputi...",
+                        options: [
+                            "Bea Impor dan Bea Ekspor",
+                            "Pajak Ekspor-Impor saja",
+                            "Cukai dan Retribusi",
+                            "Pajak Bumi dan Bangunan"
+                        ],
+                        correct: 0,
+                        explanation: "Bea Impor dan Bea Ekspor termasuk pajak perdagangan internasional."
+                    },
+                    {
+                        question: "Ketika terjadi bencana alam, negara kita mendapat bantuan dari negara lain. Ini termasuk...",
+                        options: [
+                            "Hibah",
+                            "Penerimaan pajak",
+                            "Penerimaan bukan pajak",
+                            "Pinjaman luar negeri"
+                        ],
+                        correct: 0,
+                        explanation: "Bantuan bencana alam dari negara lain termasuk hibah."
+                    },
+                    {
+                        question: "PPN (Pajak Pertambahan Nilai) termasuk jenis penerimaan...",
+                        options: [
+                            "Pajak dalam negeri",
+                            "Pajak perdagangan internasional",
+                            "Penerimaan bukan pajak",
+                            "Hibah"
+                        ],
+                        correct: 0,
+                        explanation: "PPN termasuk pajak dalam negeri."
+                    },
+                    {
+                        question: "Bea masuk barang impor termasuk...",
+                        options: [
+                            "Pajak perdagangan internasional",
+                            "Pajak dalam negeri",
+                            "Penerimaan bukan pajak",
+                            "Retribusi"
+                        ],
+                        correct: 0,
+                        explanation: "Bea impor termasuk pajak perdagangan internasional."
+                    },
+                    {
+                        question: "Laba yang dibagikan BUMN kepada pemerintah merupakan...",
+                        options: [
+                            "Bagian dari penerimaan bukan pajak",
+                            "Jenis pajak langsung",
+                            "Bentuk hibah",
+                            "Komponen pajak tidak langsung"
+                        ],
+                        correct: 0,
+                        explanation: "Laba BUMN yang dibagikan ke pemerintah termasuk penerimaan bukan pajak."
+                    }
+                ]
+            },
+            belanja: {
+                title: "BELANJA NEGARA",
+                questions: [
+                    {
+                        question: "Belanja pegawai meliputi...",
+                        options: [
+                            "Gaji PNS, Pejabat Negara, Pensiunan",
+                            "Honorarium kontrak saja",
+                            "Tunjangan keluarga PNS",
+                            "Bonus akhir tahun"
+                        ],
+                        correct: 0,
+                        explanation: "Belanja pegawai: gaji untuk PNS, Pejabat Negara, Pensiunan, dan Pegawai Honorer."
+                    },
+                    {
+                        question: "Belanja barang adalah pengeluaran untuk...",
+                        options: [
+                            "Membeli barang/jasa habis pakai",
+                            "Membeli aset tetap",
+                            "Membayar hutang",
+                            "Memberikan subsidi"
+                        ],
+                        correct: 0,
+                        explanation: "Belanja barang untuk barang/jasa habis pakai untuk keperluan negara."
+                    },
+                    {
+                        question: "Contoh belanja modal adalah...",
+                        options: [
+                            "Belanja gedung dan bangunan",
+                            "Gaji pegawai",
+                            "Pembayaran listrik",
+                            "Subsidi BBM"
+                        ],
+                        correct: 0,
+                        explanation: "Belanja modal: pengeluaran untuk aset seperti gedung, jalan, irigasi."
+                    },
+                    {
+                        question: "Belanja bunga hutang dibayarkan melalui...",
+                        options: [
+                            "Anggaran APBN",
+                            "Pinjaman baru",
+                            "Cadangan devisa",
+                            "Pendapatan pajak khusus"
+                        ],
+                        correct: 0,
+                        explanation: "Bunga hutang negara dibayarkan melalui anggaran APBN."
+                    },
+                    {
+                        question: "Subsidi harus dianggarkan dalam...",
+                        options: [
+                            "APBN",
+                            "APBD",
+                            "Anggaran perusahaan",
+                            "Dana darurat"
+                        ],
+                        correct: 0,
+                        explanation: "Semua subsidi harus dianggarkan dalam APBN."
+                    },
+                    {
+                        question: "Contoh subsidi yang dianggarkan dalam APBN adalah...",
+                        options: [
+                            "Subsidi BBM dan pupuk",
+                            "Subsidi rumah sakit swasta",
+                            "Subsidi perusahaan asing",
+                            "Subsidi pendidikan swasta"
+                        ],
+                        correct: 0,
+                        explanation: "Subsidi BBM dan pupuk termasuk subsidi yang dianggarkan."
+                    },
+                    {
+                        question: "Hibah dalam belanja negara adalah...",
+                        options: [
+                            "Transfer uang/barang ke pemerintah lain",
+                            "Bantuan untuk bencana alam",
+                            "Subsidi untuk masyarakat miskin",
+                            "Dana untuk proyek infrastruktur"
+                        ],
+                        correct: 0,
+                        explanation: "Hibah: transfer uang/barang ke pemerintah negara lain/organisasi internasional."
+                    },
+                    {
+                        question: "Bantuan sosial digunakan ketika...",
+                        options: [
+                            "Terjadi bencana alam di negara lain",
+                            "Perusahaan BUMN rugi",
+                            "PNS pensiun dini",
+                            "Nilai tukar rupiah turun"
+                        ],
+                        correct: 0,
+                        explanation: "Bantuan sosial untuk bencana alam di negara lain."
+                    },
+                    {
+                        question: "Belanja modal tanah termasuk dalam kategori...",
+                        options: [
+                            "Belanja modal",
+                            "Belanja pegawai",
+                            "Belanja barang",
+                            "Bantuan sosial"
+                        ],
+                        correct: 0,
+                        explanation: "Belanja modal tanah termasuk belanja modal."
+                    },
+                    {
+                        question: "Pembayaran bunga atas pinjaman luar negeri termasuk...",
+                        options: [
+                            "Belanja bunga hutang",
+                            "Belanja barang",
+                            "Belanja modal",
+                            "Bantuan sosial"
+                        ],
+                        correct: 0,
+                        explanation: "Bunga pinjaman termasuk belanja bunga hutang."
+                    }
+                ]
+            },
+            mekanisme: {
+                title: "MEKANISME & PENGARUH APBN",
+                questions: [
+                    {
+                        question: "APBN digunakan untuk menjaga stabilitas harga dengan cara...",
+                        options: [
+                            "Mengendalikan inflasi",
+                            "Menetapkan harga pasar",
+                            "Melarang kenaikan harga",
+                            "Mensubsidi semua barang"
+                        ],
+                        correct: 0,
+                        explanation: "APBN menjadi instrumen untuk mengendalikan inflasi."
+                    },
+                    {
+                        question: "Distribusi pendapatan melalui APBN dilakukan dengan...",
+                        options: [
+                            "Program bantuan sosial",
+                            "Penurunan pajak progresif",
+                            "Kenaikan gaji PNS",
+                            "Subsidi untuk pengusaha"
+                        ],
+                        correct: 0,
+                        explanation: "Program bantuan sosial membantu pemerataan pendapatan."
+                    },
+                    {
+                        question: "APBN mendorong pertumbuhan ekonomi melalui...",
+                        options: [
+                            "Investasi infrastruktur dan pendidikan",
+                            "Pencetakan uang baru",
+                            "Penghapusan semua pajak",
+                            "Impor barang mewah"
+                        ],
+                        correct: 0,
+                        explanation: "Investasi infrastruktur meningkatkan produktivitas ekonomi."
+                    },
+                    {
+                        question: "Pengurangan pengangguran dilakukan APBN dengan...",
+                        options: [
+                            "Proyek-proyek pemerintah",
+                            "Pengurangan jumlah pekerja",
+                            "Otomatisasi industri",
+                            "Impor tenaga kerja"
+                        ],
+                        correct: 0,
+                        explanation: "Proyek pemerintah menciptakan lapangan kerja."
+                    },
+                    {
+                        question: "Mekanisme penyusunan APBN melibatkan...",
+                        options: [
+                            "Pemerintah dan DPR",
+                            "Presiden saja",
+                            "Menteri Keuangan saja",
+                            "Bank Sentral"
+                        ],
+                        correct: 0,
+                        explanation: "APBN disusun pemerintah dan disetujui DPR."
+                    },
+                    {
+                        question: "APBN mempengaruhi perekonomian melalui...",
+                        options: [
+                            "Kebijakan fiskal pemerintah",
+                            "Kebijakan moneter bank sentral",
+                            "Kebijakan perdagangan internasional",
+                            "Kebijakan industri swasta"
+                        ],
+                        correct: 0,
+                        explanation: "APBN merupakan instrumen kebijakan fiskal."
+                    },
+                    {
+                        question: "Stabilisasi ekonomi melalui APBN bertujuan mencegah...",
+                        options: [
+                            "Kondisi ekonomi tidak terkendali",
+                            "Pertumbuhan ekonomi",
+                            "Kenaikan ekspor",
+                            "Penurunan impor"
+                        ],
+                        correct: 0,
+                        explanation: "Stabilisasi untuk mencegah kondisi ekonomi tidak terkendali."
+                    },
+                    {
+                        question: "Pengaruh APBN terhadap kesempatan kerja adalah...",
+                        options: [
+                            "Menciptakan lapangan kerja baru",
+                            "Mengurangi kebutuhan tenaga kerja",
+                            "Meningkatkan upah minimum",
+                            "Mengurangi jam kerja"
+                        ],
+                        correct: 0,
+                        explanation: "Proyek pemerintah menciptakan kesempatan kerja."
+                    }
+                ]
+            },
+            full: {
+                title: "UJIAN LENGKAP APBN (48 SOAL)",
+                questions: []
+            }
+        };
+
+        // Generate full quiz
+        for (let category in quizData) {
+            if (category !== 'full') {
+                quizData.full.questions = quizData.full.questions.concat(quizData[category].questions);
+            }
+        }
+
+        // Global variables
+        let currentQuiz = '';
+        let userAnswers = [];
+        let timerInterval;
+        let timeLeft = 3600;
+
+        // Start quiz function
+        function startQuiz(quizType) {
+            currentQuiz = quizType;
+            userAnswers = new Array(quizData[quizType].questions.length).fill(-1);
+            
+            document.getElementById('menu').style.display = 'none';
+            document.getElementById('quiz-section').style.display = 'block';
+            document.getElementById('result-section').style.display = 'none';
+            
+            document.getElementById('quiz-title').innerHTML = 
+                `<i class="fas fa-play"></i> ${quizData[quizType].title}`;
+            
+            renderQuestions();
+            startTimer();
+        }
+
+        // Render questions
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+            
+            quizData[currentQuiz].questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.innerHTML = `
+                    <h4><span class="question-number">${index + 1}</span> ${q.question}</h4>
+                    <div class="options">
+                        ${q.options.map((option, optIndex) => `
+                            <div class="option ${userAnswers[index] === optIndex ? 'selected' : ''}" 
+                                 onclick="selectAnswer(${index}, ${optIndex})">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong><i class="fas fa-info-circle"></i> Penjelasan:</strong><br>
+                        ${q.explanation}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        // Select answer
+        function selectAnswer(questionIndex, optionIndex) {
+            userAnswers[questionIndex] = optionIndex;
+            
+            // Update UI
+            const options = document.querySelectorAll(`#questions-container .question:nth-child(${questionIndex + 1}) .option`);
+            options.forEach(opt => opt.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+        }
+
+        // Start timer
+        function startTimer() {
+            clearInterval(timerInterval);
+            timeLeft = quizData[currentQuiz].questions.length * 60;
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('time').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitQuiz();
+                }
+            }, 1000);
+        }
+
+        // Submit quiz
+        function submitQuiz() {
+            clearInterval(timerInterval);
+            
+            let correct = 0;
+            let wrong = 0;
+            let unanswered = 0;
+            
+            quizData[currentQuiz].questions.forEach((q, index) => {
+                if (userAnswers[index] === q.correct) {
+                    correct++;
+                } else if (userAnswers[index] === -1) {
+                    unanswered++;
+                } else {
+                    wrong++;
+                }
+            });
+            
+            const total = quizData[currentQuiz].questions.length;
+            const percentage = Math.round((correct / total) * 100);
+            
+            // Show results
+            document.getElementById('quiz-section').style.display = 'none';
+            document.getElementById('result-section').style.display = 'block';
+            
+            document.getElementById('final-score').textContent = `${correct}/${total}`;
+            document.getElementById('correct-count').textContent = correct;
+            document.getElementById('wrong-count').textContent = wrong;
+            document.getElementById('total-questions').textContent = total;
+            document.getElementById('percentage').textContent = `${percentage}%`;
+            
+            // Score text
+            let scoreText = '';
+            if (percentage >= 90) {
+                scoreText = 'Sangat baik! Penguasaan materi APBN sempurna.';
+            } else if (percentage >= 80) {
+                scoreText = 'Baik sekali! Hampir menguasai semua materi.';
+            } else if (percentage >= 70) {
+                scoreText = 'Baik! Pemahaman APBN sudah cukup baik.';
+            } else if (percentage >= 60) {
+                scoreText = 'Cukup! Perlu review beberapa materi.';
+            } else {
+                scoreText = 'Perlu belajar lagi. Review materi dengan seksama.';
+            }
+            
+            document.getElementById('score-text').innerHTML = `
+                <p>${scoreText}</p>
+                <p>Waktu tersisa: ${document.getElementById('time').textContent}</p>
+            `;
+        }
+
+        // Review answers
+        function reviewAnswers() {
+            document.getElementById('result-section').style.display = 'none';
+            document.getElementById('quiz-section').style.display = 'block';
+            
+            // Show explanations for wrong answers
+            quizData[currentQuiz].questions.forEach((q, index) => {
+                if (userAnswers[index] !== q.correct) {
+                    const explanation = document.getElementById(`explanation-${index}`);
+                    if (explanation) {
+                        explanation.classList.add('show');
+                    }
+                }
+            });
+        }
+
+        // Reset quiz
+        function resetQuiz() {
+            userAnswers = new Array(quizData[currentQuiz].questions.length).fill(-1);
+            renderQuestions();
+            startTimer();
+        }
+
+        // Show menu
+        function showMenu() {
+            document.getElementById('menu').style.display = 'grid';
+            document.getElementById('quiz-section').style.display = 'none';
+            document.getElementById('result-section').style.display = 'none';
+            clearInterval(timerInterval);
+            document.getElementById('time').textContent = '60:00';
+        }
+
+        // Initialize
+        window.onload = function() {
+            console.log("APBN Quiz System Loaded");
+        };
+    </script>
+</body>
+</html>
